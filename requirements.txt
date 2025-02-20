@@ -1,0 +1,17 @@
+psycopg2
+python-dotenv
+autopep8
+django
+djangorestframework
+markdown
+django-filter
+djangorestframework-simplejwt
+python-decouple
+psycopg2-binary
+celery[redis]
+gevent
+requests
+django-celery-beat
+channels
+channels-redis
+daphne

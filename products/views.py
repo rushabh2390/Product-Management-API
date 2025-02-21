@@ -1,9 +1,19 @@
 from rest_framework import viewsets, permissions, status
 from .models import Product, Category  # Import your models
 from rest_framework.response import Response
-from .serializers import ProductSerializer  # Import your serializer
+from .serializers import ProductSerializer, FileUploadSerializer
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from rest_framework.parsers import MultiPartParser
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
+from django.shortcuts import render
+from rest_framework.decorators import api_view, permission_classes, parser_classes
+from rest_framework.permissions import IsAdminUser
+from .tasks import process_json_upload
+from .models import Category, Product
+from django.core.files.storage import default_storage
+from django.conf import settings
+import os
 
 
 class IsAdminOrReadOnly(permissions.BasePermission):
@@ -24,7 +34,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminOrReadOnly,)
 
     def get_queryset(self):
-        if self.action == 'retrieve': 
+        if self.action == 'retrieve':
             return self.queryset
         return self.queryset
 
@@ -133,3 +143,39 @@ class ProductViewSet(viewsets.ModelViewSet):
         instance = self.get_object()
         instance.soft_delete()  # Soft delete
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@swagger_auto_schema(
+    method='post',
+    operation_summary="Upload JSON file for category and product import (Admin Only)",
+    operation_description="Upload a JSON file containing category and product data. Processing is handled asynchronously.",
+    tags=["Imports"],
+    manual_parameters=[
+        openapi.Parameter(
+            'Authorization', openapi.IN_HEADER, description="Bearer Token",
+            type=openapi.TYPE_STRING,
+            required=True
+        ),
+    ],
+    request_body=FileUploadSerializer,
+    responses={
+        200: openapi.Response(description="JSON upload started in the background"),
+        400: openapi.Response(description="Bad request (e.g., no file uploaded)"),
+        403: openapi.Response(description="Forbidden (Admin access required)"),
+    },
+)
+@api_view(['POST'])
+@permission_classes([IsAdminUser])
+@parser_classes([MultiPartParser])
+def upload_json(request):
+    if 'file' not in request.FILES:
+        return HttpResponseBadRequest("No file uploaded")
+
+    uploaded_file = request.FILES['file']
+    file_path = os.path.join(settings.MEDIA_ROOT, uploaded_file.name)
+    with open(file_path, 'wb') as f:
+        for chunk in uploaded_file.chunks():
+            f.write(chunk)
+
+    process_json_upload.delay(file_path)
+    return HttpResponse("JSON upload started in the background", status=status.HTTP_200_OK)

@@ -1,9 +1,10 @@
 from rest_framework.routers import DefaultRouter
-from . import views
-
+from .views import ProductViewSet, upload_json
+from django.urls import path
 router = DefaultRouter()
-router.register(r'', views.ProductViewSet, basename='product')
+router.register(r'', ProductViewSet, basename='product')
 
 urlpatterns = [
+    path('upload/', upload_json),
     *router.urls,
 ]

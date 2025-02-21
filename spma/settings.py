@@ -152,7 +152,13 @@ SWAGGER_SETTINGS = {
     'OPENAPI_VERSION': '3.0.2',
     'DOC_EXPANSION': 'none',
     'DEFAULT_MODEL_SCHEMA': {},
-    'SECURITY_DEFINITIONS': {},
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    },
 }
 
 SIMPLE_JWT = {
@@ -163,7 +169,7 @@ SIMPLE_JWT = {
     "UPDATE_LAST_LOGIN": False,
 
     "ALGORITHM": "HS256",
-    "SIGNING_KEY": os.getenv('SIGNING_SECRET_KEY','1234'),
+    "SIGNING_KEY": os.getenv('SIGNING_SECRET_KEY', '1234'),
     "VERIFYING_KEY": "",
     "AUDIENCE": None,
     "ISSUER": None,
@@ -204,3 +210,9 @@ EMAIL_HOST_USER = os.getenv("FROM_MAIL", "your_email@example.com")
 EMAIL_HOST_PASSWORD = os.getenv("MAIL_PWD", "your_email_password")
 # Optional:
 # EMAIL_TIMEOUT = 10  # Timeout in seconds
+
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'  # Or your broker URL
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'  # Or your result backend
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Where to save uploaded files
+MEDIA_URL = '/media/'  # URL for media files

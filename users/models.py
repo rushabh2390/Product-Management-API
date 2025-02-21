@@ -4,9 +4,9 @@ from django.contrib.auth.models import BaseUserManager
 from datetime import datetime
 from django.contrib.auth.hashers import make_password
 # Create your models here.
+from commons.models import Common, SoftDeleteManager
 
-
-class UserManager(BaseUserManager):
+class UserManager(SoftDeleteManager, BaseUserManager):
     def create_user(self, username=None, email=None, password=None, **extra_fields):
         if not email:
             raise ValueError('Email is Required')
@@ -27,18 +27,8 @@ class UserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
-    def get_queryset(self):
-        """
-        Getting queryset function for Soft Delete models.
-        """
-        return super().get_queryset().filter(deleted__isnull=True)
 
-
-class CustomerUser(User):
-    created = models.DateTimeField(auto_now_add=True)
-    deleted = models.DateTimeField(null=True,blank=True)
-    updated = models.DateTimeField(auto_now_add=True)
-
+class CustomerUser(User,Common):
     class Meta:
         db_table = "users"
 

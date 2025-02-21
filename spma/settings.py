@@ -160,3 +160,13 @@ SIMPLE_JWT = {
         'TOKEN_BLACKLIST_MODEL': 'rest_framework_simplejwt.token_blacklist.models.OutstandingToken',
     },
 }
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # set this when have email
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Print mail in console
+# EMAIL_HOST = 'your_smtp_server.com'  # e.g., 'smtp.gmail.com'
+# EMAIL_PORT = 587  # or 465 for SSL
+# EMAIL_USE_TLS = True  # or EMAIL_USE_SSL = True if using SSL
+EMAIL_HOST_USER = os.getenv("FROM_MAIL", "your_email@example.com")
+EMAIL_HOST_PASSWORD = os.getenv("MAIL_PWD", "your_email_password")
+# Optional:
+# EMAIL_TIMEOUT = 10  # Timeout in seconds

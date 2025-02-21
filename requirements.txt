@@ -11,8 +11,5 @@ celery[redis]
 gevent
 requests
 django-celery-beat
-channels
-channels-redis
-daphne
 drf-yasg
 whitenoise

@@ -35,8 +35,6 @@ class UserManager(BaseUserManager):
 
 
 class CustomerUser(User):
-    name = models.CharField(max_length=100, null=True,
-                            blank=True, default=None)
     created = models.DateTimeField(auto_now_add=True)
     deleted = models.DateTimeField(null=True,blank=True)
     updated = models.DateTimeField(auto_now_add=True)
@@ -50,8 +48,8 @@ class CustomerUser(User):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    # def __str__(self):
-    #     return self.email
+    def __str__(self):
+        return self.email
 
     def save(self, *args, **kwargs):
         # Check if already hashed

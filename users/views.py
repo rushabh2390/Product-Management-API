@@ -33,8 +33,8 @@ class RegistrationView(APIView):
     def post(self, request):
         serializer = RegistrationSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            user = serializer.save()
+            return Response(DetailSerializer(user).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -129,11 +129,18 @@ class UserUpdateView(APIView):
 
     @swagger_auto_schema(
         tags=["auth"],
+        manual_parameters=[
+            openapi.Parameter(
+                'Authorization', openapi.IN_HEADER, description="Bearer Token",
+                type=openapi.TYPE_STRING,
+                required=True
+            )
+        ],
         operation_id="Update_user",
         operation_description="Update User",
         request_body=UserUpdateSerializer,
         responses={200: openapi.Response(
-            description='User detail update', schema=UserUpdateSerializer), 500: 'Internal server error'}
+            description='User detail update', schema=DetailSerializer), 500: 'Internal server error'}
     )
     def patch(self, request):
         user = request.user
@@ -141,8 +148,8 @@ class UserUpdateView(APIView):
         serializer = UserUpdateSerializer(
             user, data=request.data, partial=True)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            user = serializer.save()
+            return Response(DetailSerializer(user).data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -179,7 +186,6 @@ class ForgotPasswordView(APIView):
                 string.ascii_letters + string.digits) for i in range(10))
             user.set_password(new_password)
             user.save()
-
             # Send email with the reset link (replace with your actual email sending logic)
             send_mail(
                 'Password Reset',

@@ -3,6 +3,8 @@ import json
 from products.models import Category, Product
 from django.utils import timezone
 import os
+
+
 @shared_task
 def process_json_upload(file_path):
     try:
@@ -11,11 +13,11 @@ def process_json_upload(file_path):
 
             categories_data = data.get('categories', [])
             products_data = data.get('products', [])
-
+            print(categories_data, products_data)
             # Create or update categories
             for category_data in categories_data:
-                category, created = Category.objects.update_or_create(
-                    id=category_data['id'],
+                category = Category.objects.update_or_create(
+                    category_id=category_data['id'],
                     defaults={
                         'category_name': category_data['category_name'],
                         'description': category_data['description'],
@@ -28,9 +30,10 @@ def process_json_upload(file_path):
             for product_data in products_data:
                 category_id = product_data['category_id']
                 try:
-                    category = Category.objects.get(id=category_id)
+                    category = Category.objects.get(category_id=category_id)
                 except Category.DoesNotExist:
-                    print(f"Category with ID {category_id} not found. Skipping product.")
+                    print(
+                        f"Category with ID {category_id} not found. Skipping product.")
                     continue  # Skip to the next product
 
                 product, created = Product.objects.update_or_create(
@@ -52,4 +55,4 @@ def process_json_upload(file_path):
         print(f"Error processing JSON file: {e}")
         # Handle the error appropriately, e.g., log it, send a notification, etc.
     finally:
-        os.remove(file_path) # Clean up the uploaded file after processing
+        os.remove(file_path)  # Clean up the uploaded file after processing

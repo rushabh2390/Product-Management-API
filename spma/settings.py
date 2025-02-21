@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'users',
     'categories',
     'products',
+    'django_celery_results',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -211,8 +213,15 @@ EMAIL_HOST_PASSWORD = os.getenv("MAIL_PWD", "your_email_password")
 # Optional:
 # EMAIL_TIMEOUT = 10  # Timeout in seconds
 
-CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'  # Or your broker URL
-CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'  # Or your result backend
+# settings.py
+
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Kolkata'
+
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Where to save uploaded files
 MEDIA_URL = '/media/'  # URL for media files

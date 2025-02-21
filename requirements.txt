@@ -1,4 +1,3 @@
-psycopg2
 python-dotenv
 autopep8
 django
@@ -11,5 +10,7 @@ celery[redis]
 gevent
 requests
 django-celery-beat
+django-celery-results
 drf-yasg
 whitenoise
+gevent

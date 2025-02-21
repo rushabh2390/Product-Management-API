@@ -1,0 +1,68 @@
+version: "3.8"
+   
+services:
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c "python manage.py makemigrations && \
+              python manage.py migrate && \
+              python manage.py initadmin && \
+              python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/usr/src/app/
+    ports:
+      - 8000:8000
+    environment:
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=postgres
+      - DATABASE_HOST=localhost
+      - DATABASE_NAME=product_management
+      - DATABASE_PORT=5432
+      - REDIS_URL=redis://localhost:6379/0
+      - FROM_MAIL=your_email@example.com
+      - MAIL_PWD=your_email_password
+      - SIGNING_SECRET_KEY=09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7
+    depends_on:
+      - redis
+      - postgres-db
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command:  bash -c "celery -A spma worker -l info"
+    volumes:
+      - .:/usr/src/app/
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - redis
+      - postgres-db
+  celery-beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command:  bash -c "celery -A spma beat -l info"
+    volumes:
+      - .:/usr/src/app/
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - redis
+      - postgres-db
+  
+  postgres-db:
+    image: postgres:13.5
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: product_management
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data:/var/lib/postgresql/data

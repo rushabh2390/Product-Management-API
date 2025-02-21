@@ -36,19 +36,18 @@ celery -A spma worker -l info -P gevent
 
 ````
 9. Now run this project with.
-```
+````
 python manage.py runserver
-```
- 
-[API SWAGGER](http://localhost:8000/swagger)
----
-![API SWAGGER](api_swagger.jpg)
+````
 
 ## Run in Docker
 ---
 1. clone this repo.
 2. Go to Project Directory in terminal.
 3. Run following command.
-```
+````
 docker-compose up -d
-```
+````
+[API SWAGGER](http://localhost:8000/swagger)
+---
+![API SWAGGER](api_swagger.jpg)

@@ -26,6 +26,7 @@ class RegistrationView(APIView):
         tags=["auth"],
         operation_id="create_user",
         operation_description="Create Product management users",
+        operation_summary="Create Product management users",
         request_body=RegistrationSerializer,
         responses={201: openapi.Response(
             description='Create product management users', schema=DetailSerializer), 500: 'Internal server error'}
@@ -45,6 +46,7 @@ class LoginView(APIView):
         tags=["auth"],
         operation_id="login_user",
         operation_description="Login User",
+        operation_summary="Login User",
         request_body=LoginSerializer,  # Use the serializer directly
         responses={
             200: openapi.Response(
@@ -97,6 +99,7 @@ class LogoutView(APIView):
         tags=["auth"],
         operation_id="Logout_user",
         operation_description="Logout User",
+        operation_summary="Logout User",
         request_body=openapi.Schema(  # Define request body for refresh token
             type=openapi.TYPE_OBJECT,
             properties={
@@ -138,6 +141,7 @@ class UserUpdateView(APIView):
         ],
         operation_id="Update_user",
         operation_description="Update User",
+        operation_summary="Update User",
         request_body=UserUpdateSerializer,
         responses={200: openapi.Response(
             description='User detail update', schema=DetailSerializer), 500: 'Internal server error'}
@@ -170,7 +174,7 @@ class ForgotPasswordView(APIView):
             404: openapi.Response(description='User with this email does not exist'),
             500: openapi.Response(description='Failed to send email'),
         },
-        operation_summary="Send password reset link",  # Add a summary
+        operation_summary="Send password reset link",
         # Add a description
         operation_description="Sends a password reset link to the user's email address.",
     )

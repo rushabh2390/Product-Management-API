@@ -1,10 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import BaseUserManager
-from datetime import datetime
 from django.contrib.auth.hashers import make_password
 # Create your models here.
 from commons.models import Common, SoftDeleteManager
+
 
 class UserManager(SoftDeleteManager, BaseUserManager):
     def create_user(self, username=None, email=None, password=None, **extra_fields):
@@ -28,7 +28,7 @@ class UserManager(SoftDeleteManager, BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
-class CustomerUser(User,Common):
+class CustomerUser(User, Common):
     class Meta:
         db_table = "users"
 
@@ -48,6 +48,6 @@ class CustomerUser(User,Common):
         self.is_active = True
         super().save(*args, **kwargs)
 
-    def soft_delete(self):
-        self.deleted = datetime.now()
+    def deactive_user(self, *args, **kwargs):
         self.is_active = False
+        super().save(*args, **kwargs)

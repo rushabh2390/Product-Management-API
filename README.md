@@ -33,7 +33,6 @@ python manage.py createsuperuser
 8. After install  and run redis please type following 2 command in 2 seperate terminal.
 ````
 celery -A spma worker -l info -P gevent
-
 ````
 9. Now run this project with.
 ````

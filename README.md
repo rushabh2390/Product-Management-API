@@ -41,6 +41,8 @@ python manage.py runserver
 ```
  
 [API SWAGGER](http://localhost:8000/swagger)
+---
+![API SWAGGER](api_swagger.jpg)
 
 ## Run in Docker
 ---

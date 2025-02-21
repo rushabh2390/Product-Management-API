@@ -1,4 +1,5 @@
 from rest_framework import permissions, status, viewsets
+from rest_framework.response import Response
 from .models import Category
 from .serializers import CategorySerializer
 from drf_yasg.utils import swagger_auto_schema
@@ -24,14 +25,14 @@ class CategoryViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAdminOrReadOnly,)
 
     def get_queryset(self):
-        if self.action == 'list':  # Only apply filtering for list action
+        if self.action == 'list':
             return self.queryset.filter(parent__isnull=True)
-        elif self.action == 'retrieve':  # For detail view, we want to see all the subcategories
+        elif self.action == 'retrieve':
             return self.queryset
-        return self.queryset  # For other actions(create, update, del
+        return self.queryset
 
     @swagger_auto_schema(
-        operation_summary="Create a new category",
+        operation_summary="Create a new category  (Admin Only)",
         tags=["Categories"],
         manual_parameters=[
             openapi.Parameter(
@@ -73,7 +74,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
         return super().retrieve(request, *args, **kwargs)
 
     @swagger_auto_schema(
-        operation_summary="Update a category",
+        operation_summary="Update a category  (Admin Only)",
         tags=["Categories"],
         manual_parameters=[
             openapi.Parameter(
@@ -94,7 +95,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
         return super().update(request, *args, **kwargs)
 
     @swagger_auto_schema(
-        operation_summary="Partially update a category",
+        operation_summary="Partially update a category  (Admin Only)",
         tags=["Categories"],
         manual_parameters=[
             openapi.Parameter(
@@ -115,7 +116,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
         return super().partial_update(request, *args, **kwargs)
 
     @swagger_auto_schema(
-        operation_summary="Soft delete a category",
+        operation_summary="Soft delete a category  (Admin Only)",
         tags=["Categories"],
         manual_parameters=[
             openapi.Parameter(
@@ -131,4 +132,6 @@ class CategoryViewSet(viewsets.ModelViewSet):
         }
     )
     def destroy(self, request, *args, **kwargs):
-        return super().destroy(request, *args, **kwargs)
+        instance = self.get_object()
+        instance.soft_delete()  # Soft delete
+        return Response(status=status.HTTP_204_NO_CONTENT)

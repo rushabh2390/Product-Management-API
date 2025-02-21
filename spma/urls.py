@@ -22,6 +22,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from drf_yasg import openapi
 import users.urls
 import categories.urls
+import products.urls
 schema_view = get_schema_view(
     openapi.Info(
         title="Product Management",
@@ -38,6 +39,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('users.urls')),
     path('category/', include('categories.urls')),
+    path('product/', include('products.urls')),
     path('swagger/', schema_view.with_ui('swagger',
                                          cache_timeout=0), name='schema-swagger-ui'),
 ] + staticfiles_urlpatterns()

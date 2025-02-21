@@ -23,7 +23,7 @@ class RegistrationView(APIView):
     permission_classes = (permissions.AllowAny,)
 
     @swagger_auto_schema(
-        tags=["auth"],
+        tags=["Users"],
         operation_id="create_user",
         operation_description="Create Product management users",
         operation_summary="Create Product management users",
@@ -43,7 +43,7 @@ class LoginView(APIView):
     permission_classes = (permissions.AllowAny,)
 
     @swagger_auto_schema(
-        tags=["auth"],
+        tags=["Users"],
         operation_id="login_user",
         operation_description="Login User",
         operation_summary="Login User",
@@ -96,7 +96,7 @@ class LogoutView(APIView):
     authentication_classes = (JWTAuthentication,)
 
     @swagger_auto_schema(
-        tags=["auth"],
+        tags=["Users"],
         operation_id="Logout_user",
         operation_description="Logout User",
         operation_summary="Logout User",
@@ -131,7 +131,7 @@ class UserUpdateView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     @swagger_auto_schema(
-        tags=["auth"],
+        tags=["Users"],
         manual_parameters=[
             openapi.Parameter(
                 'Authorization', openapi.IN_HEADER, description="Bearer Token",
@@ -161,7 +161,7 @@ class ForgotPasswordView(APIView):
     permission_classes = (permissions.AllowAny,)
 
     @swagger_auto_schema(
-        tags=["auth"],
+        tags=["Users"],
         request_body=openapi.Schema(  # Define the request body schema
             type=openapi.TYPE_OBJECT,
             properties={

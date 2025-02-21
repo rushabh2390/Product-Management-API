@@ -1,0 +1,149 @@
+curl -X 'POST' \
+  'http://localhost:8000/auth/login/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -H 'X-CSRFTOKEN: RJiAjrSTyzlduQ8Uj19PiY2vlTyMmDJLIIDbFUdC6vby2YfBMIn5WD606eztkRsz' \
+  -d '{
+  "email": "rushabh@example.com",
+  "password": "rushabh"
+}'
+
+curl -X 'POST' \
+  'http://localhost:8000/auth/register/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -H 'X-CSRFTOKEN: RJiAjrSTyzlduQ8Uj19PiY2vlTyMmDJLIIDbFUdC6vby2YfBMIn5WD606eztkRsz' \
+  -d '{
+  "email": "rushabh@example.com",
+  "first_name": "Rushabh",
+  "last_name": "Doshi",
+  "password": "rushabh",
+  "is_staff": true,
+  "is_active": true,
+  "username": "ru90"
+}'
+
+curl -X 'GET' \
+  'http://localhost:8000/category/' \
+  -H 'accept: application/json' \
+  -H 'X-CSRFTOKEN: RJiAjrSTyzlduQ8Uj19PiY2vlTyMmDJLIIDbFUdC6vby2YfBMIn5WD606eztkRsz'
+
+curl -X 'POST' \
+  'http://localhost:8000/category/' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwMTI1NDMxLCJpYXQiOjE3NDAxMjUxMzEsImp0aSI6ImJiNzFmYTEzYmE2MTQzYjE5MGYyYmNmYWNlM2Q0MDFhIiwidXNlcl9pZCI6MX0.L4Dy6OfsPA_t7VgjSxPh0J_1TuInel0F4mG_N8iccHs' \
+  -H 'Content-Type: application/json' \
+  -H 'X-CSRFTOKEN: RJiAjrSTyzlduQ8Uj19PiY2vlTyMmDJLIIDbFUdC6vby2YfBMIn5WD606eztkRsz' \
+  -d '{
+  "category_name": "Laptops",
+  "description": "Devices including smartphones, laptops, and accessories",
+"parent":1
+}'
+
+curl -X 'GET' \
+  'http://localhost:8000/category/2/' \
+  -H 'accept: application/json' \
+  -H 'X-CSRFTOKEN: RJiAjrSTyzlduQ8Uj19PiY2vlTyMmDJLIIDbFUdC6vby2YfBMIn5WD606eztkRsz'
+
+
+curl -X 'PUT' \
+  'http://localhost:8000/category/2/' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwMTI1ODgzLCJpYXQiOjE3NDAxMjU1ODMsImp0aSI6ImRlMmExYjNlMzI3ZDRkNTk4NGYzYjA1OWIyNzFkMjg5IiwidXNlcl9pZCI6MX0.6pfJMSf4a7EgJRQdUAToeL9G3KcOp1A1PAn2CFWxwjI' \
+  -H 'Content-Type: application/json' \
+  -H 'X-CSRFTOKEN: RJiAjrSTyzlduQ8Uj19PiY2vlTyMmDJLIIDbFUdC6vby2YfBMIn5WD606eztkRsz' \
+  -d '{
+  "category_name": "Trimmer",
+  "description": "Shaving for men",
+  "parent": 1
+}'
+
+
+curl -X 'PATCH' \
+  'http://localhost:8000/category/2/' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwMTI1ODgzLCJpYXQiOjE3NDAxMjU1ODMsImp0aSI6ImRlMmExYjNlMzI3ZDRkNTk4NGYzYjA1OWIyNzFkMjg5IiwidXNlcl9pZCI6MX0.6pfJMSf4a7EgJRQdUAToeL9G3KcOp1A1PAn2CFWxwjI' \
+  -H 'Content-Type: application/json' \
+  -H 'X-CSRFTOKEN: RJiAjrSTyzlduQ8Uj19PiY2vlTyMmDJLIIDbFUdC6vby2YfBMIn5WD606eztkRsz' \
+  -d '{
+  "description": "Shaving face and head for men",
+  "parent": 1
+}'
+
+
+curl -X 'DELETE' \
+  'http://localhost:8000/category/2/' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwMTI1ODgzLCJpYXQiOjE3NDAxMjU1ODMsImp0aSI6ImRlMmExYjNlMzI3ZDRkNTk4NGYzYjA1OWIyNzFkMjg5IiwidXNlcl9pZCI6MX0.6pfJMSf4a7EgJRQdUAToeL9G3KcOp1A1PAn2CFWxwjI' \
+  -H 'X-CSRFTOKEN: RJiAjrSTyzlduQ8Uj19PiY2vlTyMmDJLIIDbFUdC6vby2YfBMIn5WD606eztkRsz'
+
+curl -X 'POST' \
+  'http://localhost:8000/category/' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwMTMzNjU4LCJpYXQiOjE3NDAxMzAwNTgsImp0aSI6IjRjYTczYTFiNDA5ZDRmZDBiMGVjYzdkMGY2YmVjOTA0IiwidXNlcl9pZCI6MX0.cNnHj5o42wJ5QJ-aN6MB0ICVUy5hF5vQGvluoxmhCS8' \
+  -H 'Content-Type: application/json' \
+  -H 'X-CSRFTOKEN: RJiAjrSTyzlduQ8Uj19PiY2vlTyMmDJLIIDbFUdC6vby2YfBMIn5WD606eztkRsz' \
+  -d '{
+  "category_name": "Clothings",
+  "description": "Fashion items including shirts, pants, and accessories"
+}'
+
+curl -X 'PUT' \
+  'http://localhost:8000/product/1/' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwMTM0NzI4LCJpYXQiOjE3NDAxMzExMjgsImp0aSI6ImYzMjg5M2I3YTk0NzQ4YjBiNmI4OTYyNWFlNTU3ODMwIiwidXNlcl9pZCI6MX0.PUjTvOTsKlOpqhepp79hVFZIlLxDFiGlN_G_EwEsU7s' \
+  -H 'Content-Type: application/json' \
+  -H 'X-CSRFTOKEN: nGIxxZnN9SfEXQzg1ojBBKTPU6671fwReF38TsIwHO5ZvYGXu5xRfpXkFr7OZtfF' \
+  -d '{
+    "product_name": "Smartphone",
+    "product_description": "Latest model with high-resolution camera and OLED display",
+    "product_price": "699.99",
+    "currency": "INR",
+    "stock_quantity": 50,
+    "sku": "ELEC-SMART-001",
+    "image_url": "https://example.com/smartphone.jpg",
+    "category": 4
+}'
+
+curl -X 'GET' \
+  'http://localhost:8000/product/' \
+  -H 'accept: application/json' \
+  -H 'X-CSRFTOKEN: nGIxxZnN9SfEXQzg1ojBBKTPU6671fwReF38TsIwHO5ZvYGXu5xRfpXkFr7OZtfF'
+
+curl -X 'POST' \
+  'http://localhost:8000/product/' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwMTM0NzI4LCJpYXQiOjE3NDAxMzExMjgsImp0aSI6ImYzMjg5M2I3YTk0NzQ4YjBiNmI4OTYyNWFlNTU3ODMwIiwidXNlcl9pZCI6MX0.PUjTvOTsKlOpqhepp79hVFZIlLxDFiGlN_G_EwEsU7s' \
+  -H 'Content-Type: application/json' \
+  -H 'X-CSRFTOKEN: kviijNnRCLMKvSssLn4LkOZc8ygl9wkkbuDTFgIAaHC530z9e4i1Yt3HTTh27K38' \
+  -d '{
+  "product_name": "T-Shirt",
+  "product_description": "100% cotton, comfortable fit",
+  "product_price": "19.99",
+  "currency": "INR",
+  "stock_quantity": 200,
+  "sku": "CLOTH-TSHIRT-001",
+  "image_url": "https://example.com/tshirt.jpg",
+  "category": 4
+}'
+
+curl -X 'GET' \
+  'http://localhost:8000/product/2/' \
+  -H 'accept: application/json' \
+  -H 'X-CSRFTOKEN: kviijNnRCLMKvSssLn4LkOZc8ygl9wkkbuDTFgIAaHC530z9e4i1Yt3HTTh27K38'
+
+curl -X 'PATCH' \
+  'http://localhost:8000/product/1/' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwMTM0NzI4LCJpYXQiOjE3NDAxMzExMjgsImp0aSI6ImYzMjg5M2I3YTk0NzQ4YjBiNmI4OTYyNWFlNTU3ODMwIiwidXNlcl9pZCI6MX0.PUjTvOTsKlOpqhepp79hVFZIlLxDFiGlN_G_EwEsU7s' \
+  -H 'Content-Type: application/json' \
+  -H 'X-CSRFTOKEN: kviijNnRCLMKvSssLn4LkOZc8ygl9wkkbuDTFgIAaHC530z9e4i1Yt3HTTh27K38' \
+  -d '{
+  "category": 1
+}'
+
+curl -X 'DELETE' \
+  'http://localhost:8000/product/2/' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQwMTM0NzI4LCJpYXQiOjE3NDAxMzExMjgsImp0aSI6ImYzMjg5M2I3YTk0NzQ4YjBiNmI4OTYyNWFlNTU3ODMwIiwidXNlcl9pZCI6MX0.PUjTvOTsKlOpqhepp79hVFZIlLxDFiGlN_G_EwEsU7s' \
+  -H 'X-CSRFTOKEN: 1s0VNaUnRDmm2v8fTkB4V63TzAc1Gt20Srlw9Df6pzcHADfWm1PkzL7okVdIEHLO'

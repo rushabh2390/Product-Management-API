@@ -5,7 +5,7 @@ from .serializers import ProductSerializer, FileUploadSerializer
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from rest_framework.parsers import MultiPartParser
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
+from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes, parser_classes
 from rest_framework.permissions import IsAdminUser
@@ -159,9 +159,26 @@ class ProductViewSet(viewsets.ModelViewSet):
     ],
     request_body=FileUploadSerializer,
     responses={
-        200: openapi.Response(description="JSON upload started in the background"),
-        400: openapi.Response(description="Bad request (e.g., no file uploaded)"),
-        403: openapi.Response(description="Forbidden (Admin access required)"),
+        200: openapi.Response(
+            description="File processing will be started.",
+            schema=openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    'message': openapi.Schema(type=openapi.TYPE_STRING, example="File processing will be started."),
+                    'status': openapi.Schema(type=openapi.TYPE_INTEGER, example=200),
+                },
+            ),
+        ),
+        400: openapi.Response(
+            description="No file uploaded.",
+            schema=openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    'message': openapi.Schema(type=openapi.TYPE_STRING, example="No file uploaded"),
+                    'status': openapi.Schema(type=openapi.TYPE_INTEGER, example=400),
+                },
+            ),
+        ),
     },
 )
 @api_view(['POST'])
@@ -169,7 +186,11 @@ class ProductViewSet(viewsets.ModelViewSet):
 @parser_classes([MultiPartParser])
 def upload_json(request):
     if 'file' not in request.FILES:
-        return HttpResponseBadRequest("No file uploaded")
+        response_data = {
+            "message": "No file uploaded",
+            "status": 400,  # Explicitly include the status code in the JSON
+        }
+        return JsonResponse(response_data, status=400)
 
     uploaded_file = request.FILES['file']
     file_path = os.path.join(settings.MEDIA_ROOT, uploaded_file.name)
@@ -178,4 +199,8 @@ def upload_json(request):
             f.write(chunk)
 
     process_json_upload.delay(file_path)
-    return HttpResponse("JSON upload started in the background", status=status.HTTP_200_OK)
+    response_data = {
+        "message": "File processing will be started.",
+        "status": 200,  # Explicitly include the status code in the JSON
+    }
+    return JsonResponse(response_data, status=200)

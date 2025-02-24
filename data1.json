@@ -1,0 +1,96 @@
+{
+    "Product": [
+        {
+            "category": "Electronics",
+            "product_name": "Smartphone",
+            "product_description": "Latest 5G smartphone with AI camera",
+            "product_price": 999.99,
+            "currency": "USD",
+            "stock_quantity": 50,
+            "sku": "SPH-12345",
+            "image_url": "https://example.com/images/smartphone.jpg",
+            "created_at": "2024-02-24T12:00:00Z",
+            "updated_at": "2024-02-24T12:30:00Z"
+        },
+        {
+            "category": "Electronics",
+            "product_name": "Laptop",
+            "product_description": "High-performance laptop with 16GB RAM",
+            "product_price": 1299.99,
+            "currency": "USD",
+            "stock_quantity": 30,
+            "sku": "LTP-67890",
+            "image_url": "https://example.com/images/laptop.jpg",
+            "created_at": "2024-02-23T14:00:00Z",
+            "updated_at": "2024-02-23T15:00:00Z"
+        },
+        {
+            "category": "Home Appliances",
+            "product_name": "Air Conditioner",
+            "product_description": "Energy-efficient AC with fast cooling",
+            "product_price": 499.99,
+            "currency": "USD",
+            "stock_quantity": 20,
+            "sku": "AC-45678",
+            "image_url": "https://example.com/images/air_conditioner.jpg",
+            "created_at": "2024-02-22T16:00:00Z",
+            "updated_at": "2024-02-22T17:00:00Z"
+        },
+        {
+            "category": "Fashion",
+            "product_name": "Leather Jacket",
+            "product_description": "Genuine leather jacket with stylish fit",
+            "product_price": 199.99,
+            "currency": "USD",
+            "stock_quantity": 40,
+            "sku": "JKT-23456",
+            "image_url": "https://example.com/images/leather_jacket.jpg",
+            "created_at": "2024-02-21T10:00:00Z",
+            "updated_at": "2024-02-21T11:00:00Z"
+        },
+        {
+            "category": "Beauty & Health",
+            "product_name": "Face Serum",
+            "product_description": "Vitamin C face serum for glowing skin",
+            "product_price": 29.99,
+            "currency": "USD",
+            "stock_quantity": 100,
+            "sku": "SRM-78901",
+            "image_url": "https://example.com/images/face_serum.jpg",
+            "created_at": "2024-02-20T08:00:00Z",
+            "updated_at": "2024-02-20T09:00:00Z"
+        }
+    ],
+    "Category": [
+        {
+            "category_name": "Electronics",
+            "description": "Devices and gadgets",
+            "created_at": "2024-02-24T10:00:00Z",
+            "updated_at": "2024-02-24T11:00:00Z"
+        },
+        {
+            "category_name": "Home Appliances",
+            "description": "Appliances for home and kitchen",
+            "created_at": "2024-02-23T09:00:00Z",
+            "updated_at": "2024-02-23T10:00:00Z"
+        },
+        {
+            "category_name": "Fashion",
+            "description": "Clothing and accessories",
+            "created_at": "2024-02-22T08:00:00Z",
+            "updated_at": "2024-02-22T09:00:00Z"
+        },
+        {
+            "category_name": "Beauty & Health",
+            "description": "Beauty and wellness products",
+            "created_at": "2024-02-21T07:00:00Z",
+            "updated_at": "2024-02-21T08:00:00Z"
+        },
+        {
+            "category_name": "Sports & Outdoors",
+            "description": "Sporting goods and outdoor equipment",
+            "created_at": "2024-02-20T06:00:00Z",
+            "updated_at": "2024-02-20T07:00:00Z"
+        }
+    ]
+}

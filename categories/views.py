@@ -4,6 +4,7 @@ from .models import Category
 from .serializers import CategorySerializer
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from django.db.utils import IntegrityError
 
 
 class IsAdminOrReadOnly(permissions.BasePermission):
@@ -50,7 +51,15 @@ class CategoryViewSet(viewsets.ModelViewSet):
         }
     )
     def create(self, request, *args, **kwargs):
-        return super().create(request, *args, **kwargs)
+        try:
+            return super().create(request, *args, **kwargs)
+        except IntegrityError as e:
+            data = {"success":False, "message": "integraty error" }
+            return Response(data=data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception as e:
+            data = {"success":False, "message": str(e) }
+            return Response(data=data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
     @swagger_auto_schema(
         operation_summary="List top-level categories",
